@@ -1,8 +1,8 @@
 package ru.vcrop.GameOfLife;
 
 
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,7 +14,6 @@ import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 
-@Log4j2
 @Controller
 @RequestMapping("/")
 public class StartController {
@@ -23,15 +22,17 @@ public class StartController {
     Field field;
     @Autowired
     GameOfLifeService gameOfLifeService;
+    @Autowired
+    ObjectMapper objectMapper;
 
+    @SneakyThrows
     @GetMapping
     public String get(Model model) {
-        Gson gson = new GsonBuilder().create();
         if (Stream.of(field.getArray()).anyMatch(row -> IntStream.of(row).anyMatch(v -> (v & 1) == 1)))
             IntStream.range(0, field.getSize())
                     .forEach(row -> IntStream.range(0, field.getSize())
                             .forEach(col -> field.getArray()[row][col] = (field.getArray()[row][col] & 1) << 1));
-        model.addAttribute("field", gson.toJson(new FieldDto(field.getSize(), field.getArray())));
+        model.addAttribute("field", objectMapper.writeValueAsString(new FieldDto(field.getSize(), field.getArray())));
         return "index";
     }
 
