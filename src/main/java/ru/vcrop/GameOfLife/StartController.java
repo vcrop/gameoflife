@@ -27,6 +27,10 @@ public class StartController {
     @GetMapping
     public String get(Model model) {
         Gson gson = new GsonBuilder().create();
+        if (Stream.of(field.getArray()).anyMatch(row -> IntStream.of(row).anyMatch(v -> (v & 1) == 1)))
+            IntStream.range(0, field.getSize())
+                    .forEach(row -> IntStream.range(0, field.getSize())
+                            .forEach(col -> field.getArray()[row][col] = (field.getArray()[row][col] & 1) << 1));
         model.addAttribute("field", gson.toJson(new FieldDto(field.getSize(), field.getArray())));
         return "index";
     }
