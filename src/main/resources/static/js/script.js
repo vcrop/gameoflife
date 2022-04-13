@@ -56,8 +56,8 @@ function draw(ctx, size, matrix) {
                 });
         color = color - 10;
     },
-    40);
+    20);
 
-    setTimeout(() => { clearInterval(timerId);}, 1000);
+    setTimeout(() => { clearInterval(timerId);}, 500);
 
 }
