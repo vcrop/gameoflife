@@ -13,6 +13,10 @@ public class GameOfLifeService {
 
     public void gameOfLife(int[][] board) {
         for (int row = 0; row < board.length; row++)
+            for (int col = 0; col < board[0].length; col++)
+                board[row][col] >>>= 1;
+
+        for (int row = 0; row < board.length; row++)
             for (int col = 0; col < board[0].length; col++) {
                 int ones = 0;
                 ones += value(row - 1, col - 1, board);
@@ -28,8 +32,6 @@ public class GameOfLifeService {
                 if (ones == 2 && board[row][col] == 1) board[row][col] += 2;
             }
 
-        for (int row = 0; row < board.length; row++)
-            for (int col = 0; col < board[0].length; col++)
-                board[row][col] >>>= 1;
     }
+
 }

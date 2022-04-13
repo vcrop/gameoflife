@@ -22,7 +22,7 @@ public class Field{
         this.array = IntStream.range(0, size)
                 .mapToObj(row ->
                         ThreadLocalRandom.current().ints(size, 0, 100)
-                                .map(val -> val < ratio ? 1 : 0)
+                                .map(val -> val < ratio ? 2 : 0)
                                 .toArray()
                 ).toArray(int[][]::new);
     }

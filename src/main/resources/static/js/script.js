@@ -33,12 +33,31 @@ function onStart(arg) {
 
 function draw(ctx, size, matrix) {
 
+    let death = [];
+    let born = [];
+
     for (let row = 0; row < size; row++) {
         for (let col = 0; col < size; col++) {
-            if (matrix[row][col] == 1) ctx.fillStyle = "green";
-            if (matrix[row][col] == 0) ctx.fillStyle = "white";
-            ctx.fillRect(col * 20, row * 20, 20, 20);
+            if (matrix[row][col] == 2) born.push([col, row]);
+            if (matrix[row][col] == 1) death.push([col, row]);
         }
     }
+
+    let color = 255;
+
+    let timerId = setInterval(function() {
+        ctx.fillStyle = "rgba(" + color + ", 255, " + color + ", 1.0)";
+        born.forEach(function(item, i, arr) {
+            ctx.fillRect(item[0] * 20, item[1] * 20, 20, 20);
+        });
+        ctx.fillStyle = "rgba(" + (255 - color) + ", 255, " + (255 - color) + ", 1.0)";
+                death.forEach(function(item, i, arr) {
+                    ctx.fillRect(item[0] * 20, item[1] * 20, 20, 20);
+                });
+        color = color - 10;
+    },
+    40);
+
+    setTimeout(() => { clearInterval(timerId);}, 1000);
 
 }
