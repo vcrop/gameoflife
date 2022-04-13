@@ -16,12 +16,13 @@ public class Field{
     private final int size;
     private final int[][] array;
 
-    Field(@Value("${field.size}") int size) {
+    Field(@Value("${field.size}") int size, @Value("${game.ratio}") int ratio) {
         this.size = size;
+        //
         this.array = IntStream.range(0, size)
                 .mapToObj(row ->
-                        ThreadLocalRandom.current().ints(size, 0, 10)
-                                .map(val -> val < 7 ? 1 : 0)
+                        ThreadLocalRandom.current().ints(size, 0, 100)
+                                .map(val -> val < ratio ? 1 : 0)
                                 .toArray()
                 ).toArray(int[][]::new);
     }

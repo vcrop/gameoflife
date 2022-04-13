@@ -1,10 +1,8 @@
 package ru.vcrop.GameOfLife;
 
-import com.fasterxml.jackson.databind.ObjectMapper;
-import com.fasterxml.jackson.databind.ObjectWriter;
+
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
-import lombok.SneakyThrows;
 import lombok.extern.log4j.Log4j2;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
