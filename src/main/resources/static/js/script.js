@@ -15,7 +15,7 @@ function init(obj) {
     let container = document.getElementById('container');
 
     container.style.gridTemplateRows.repeat(obj.size);
-    container.style.gridTemplateColumns = 'repeat(' + obj.size + ', 1fr)';
+    container.style.gridTemplateColumns.repeat(obj.size);
 
     for (let row = 0; row < obj.size; row++)
         for (let col = 0; col < obj.size; col++) {

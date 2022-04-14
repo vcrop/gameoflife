@@ -1,6 +1,5 @@
 #container {
-    max-width: 50vh;
-    max-height: 50vh;
+    width: min(50vw, 50vh);
     aspect-ratio: 1;
     display: grid;
 }
