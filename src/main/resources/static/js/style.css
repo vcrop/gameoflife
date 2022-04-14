@@ -1,0 +1,26 @@
+#container {
+    max-width: 50%;
+    max-height: 50%;
+    aspect-ratio: 1;
+    display: grid;
+}
+
+@keyframes born {
+    from {background-color: white}
+    to {background-color: green}
+}
+
+@keyframes death {
+    from {background-color: green}
+    to {background-color: white}
+}
+
+@keyframes emplty {
+    from {background-color: white}
+    to {background-color: white}
+}
+
+@keyframes live {
+    from {background-color: green}
+    to {background-color: green}
+}

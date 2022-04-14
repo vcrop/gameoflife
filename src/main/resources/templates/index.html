@@ -3,14 +3,14 @@
 <head>
     <meta charset="UTF-8">
     <title>GameOfLife</title>
-    <script type="text/javascript" src="js/script.js"></script>
+    <link type="text/css" rel="stylesheet" th:href="@{js/style.css}"/>
+    <script type="text/javascript" th:src="@{js/script.js}"></script>
 </head>
 <body>
 
-<script th:inline="javascript">
-    var nameJs = /*[[${field}]]*/;
-    onStart(nameJs);
-</script>
+<div id="container"></div>
+
+<script th:inline="javascript">onStart([[${field}]]);</script>
 
 </body>
 </html>

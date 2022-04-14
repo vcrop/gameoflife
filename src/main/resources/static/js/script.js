@@ -1,63 +1,52 @@
 function onStart(arg) {
 
-  document.addEventListener("DOMContentLoaded", () => {
+    document.addEventListener("DOMContentLoaded", () => {
 
-    let obj = JSON.parse(arg);
-    let size = obj.size;
-    let matrix = obj.array;
+        init(JSON.parse(arg));
 
-    let canv = document.createElement('canvas');
-    let ctx = canv.getContext("2d");
+        setInterval(timer, 1000);
 
-    canv.id = 'canvasId';
-    canv.width = size * 20;
-    canv.height = size * 20;
-
-    document.body.appendChild(canv);
-
-    draw(ctx, size, matrix);
-
-    setInterval(function() {
-
-        let request = new XMLHttpRequest();
-        request.open('POST', '/', false);
-        request.send();
-
-        draw(ctx, size, JSON.parse(request.responseText));
-
-    }, 1000);
-
-  });
+    })
 
 }
 
-function draw(ctx, size, matrix) {
+function init(obj) {
 
-    let death = [];
-    let born = [];
+    let container = document.getElementById('container');
 
-    for (let row = 0; row < size; row++) {
-        for (let col = 0; col < size; col++) {
-            if (matrix[row][col] == 2) born.push([col, row]);
-            if (matrix[row][col] == 1) death.push([col, row]);
+    container.style.gridTemplateRows.repeat(obj.size);
+    container.style.gridTemplateColumns = 'repeat(' + obj.size + ', 1fr)';
+
+    for (let row = 0; row < obj.size; row++)
+        for (let col = 0; col < obj.size; col++) {
+
+            let div = document.createElement('div');
+
+            div.id = 'box' + col + '_' + row;
+            div.style.gridArea = (row + 1) + '/' + (col + 1) + '/' + (row + 2) + '/' + (col + 2);
+
+            container.appendChild(div);
         }
-    }
 
-    let color = 255;
+    draw(obj);
 
-    let timerId = setInterval(function() {
-        ctx.fillStyle = "rgba(" + color + ", 255, " + color + ", 1.0)";
-        born.forEach(function(item, i, arr) {
-            ctx.fillRect(item[0] * 20, item[1] * 20, 20, 20);
-        });
-        ctx.fillStyle = "rgba(" + (255 - color) + ", 255, " + (255 - color) + ", 1.0)";
-                death.forEach(function(item, i, arr) {
-                    ctx.fillRect(item[0] * 20, item[1] * 20, 20, 20);
-                });
-        color = color - 10;
-    },
-    20);
+}
 
-    setTimeout(() => { clearInterval(timerId);}, 500);
+function draw(obj) {
+
+    for (let row = 0; row < obj.size; row++)
+        for (let col = 0; col < obj.size; col++)
+            document.getElementById('box' + col + '_' + row)
+                .style
+                .animation = '1s ease-in-out 0s 1 normal forwards running ' + ['empty', 'death', 'born', 'live'][obj.array[col][row]];
+}
+
+function timer() {
+
+    let request = new XMLHttpRequest();
+    request.open('POST', '/', false);
+    request.send();
+
+    draw(JSON.parse(request.responseText));
 
 }
