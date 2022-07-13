@@ -3,7 +3,4 @@ field:
 
 game:
   ratio: 30
-  
-server:
-  port: ${PORT}
 
